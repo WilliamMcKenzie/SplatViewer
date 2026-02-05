@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>busy.giraffe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "/lib/three.module.js",
+            "gaussian-splats-3d": "/lib/gaussian-splats-3d.module.js"
+        }
+    }
+    </script>
+</head>
+<body>
+	<div class="ui">
+		<div id="sidebar" class="sidebar hidden">
+			<p class="stat" id="fps" onclick="openGallery()">FPS: ???</p>
+			<p class="stat" id="points" onclick="upload()" style="margin-bottom: auto">Points: ???</p>
+			<full_break></full_break>
+			<button class="btn" id="reset_btn">Reset camera</button>
+			<button class="btn" id="frame_btn">Frame camera</button>
+			<button class="btn" id="first_person_btn">First person</button>
+		</div>
+		<div id="timeline" class="timeline hidden">
+			<button class="btn" id="play_btn">Play/Stop</button>
+			<button class="btn" id="keyframe_btn">+Key</button>
+			<div id="timeline_container" class="keyframes">
+				<input type="range" id="timeline_slider" min="0" max="20" value="0" step="0.01" class="progress-bar">
+<!--
+				<button class="key" style="left: 0%"></button>
+				<button class="key" style="left: 25%"></button>
+				<button class="key" style="left: 50%"></button>
+				<button class="key" style="left: 75%"></button>
+-->
+			</div>
+			<button class="btn" id="export_btn">Export</button>
+		</div>
+		<div id="download_modal" class="download-progress">
+			<label id="download_label">Downloading...</label>
+			<progress id="download_progress" value="0" max="100"></progress>
+		</div>
+	</div>
+    <script type="module" src="/renderer.js"></script>
+</body>
+</html>
