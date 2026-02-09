@@ -1,7 +1,7 @@
 import * as THREE from "three"
 import * as GaussianSplats3D from "gaussian-splats-3d"
-import { initControls, move } from "/controls.js"
-import { initTimeline, playFrame } from "/timeline.js"
+import { initControls, move } from "/scripts/controls.js"
+import { initTimeline, playFrame } from "/scripts/timeline.js"
 
 const defaultView = {
 	"initialCameraPosition": [0, 0, 0],
@@ -28,6 +28,8 @@ viewer.addSplatScene("/assets/world00.ply", {
 	document.getElementById("download_modal").classList.add("hidden")
 	document.getElementById("sidebar").classList.remove("hidden")
 	document.getElementById("timeline").classList.remove("hidden")
+	viewer.renderer.setClearColor(0x1f1f1f, 1)
+	
 	initControls(viewer)
 	initTimeline(viewer)
 	animate()

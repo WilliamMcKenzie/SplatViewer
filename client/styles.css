@@ -37,6 +37,27 @@ body {
 	transform: translate(-50%, -50%);
 }
 
+.export-progress {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.export-bg {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0,0,0,0.4);
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: -1;
+}
+
+progress {
+	width: 100%;
+}
+
 .timeline {
 	width: calc(100vw - 2rem);
 	padding: 1rem;
