@@ -19,7 +19,7 @@ Go to https://splat.lagso.com, be warned video exports take x6 as long as they d
 
 ### 1. Path
 
-Creating a new frame adds a new frame object to the global list of frames. Each frame has a timestamp, the camera position, and the camera quaternion (orientation), which is all you need to replicate the exact POV of the user in my case.
+Creating a new frame adds a new frame object to the global list of frames. Each frame has a timestamp, the camera position, and the camera quaternion (orientation), which is all you need to replicate the exact POV of the user in my case. When navigating the timeline, the nearest 4 frames are located and splined appropriately.
 
 These 3 things translate nicely to JSON as well: the timestamp as an integer, the position as an object with keys x,y,z, and the quaternion as a Array(4). This allows users to save their projects.
 
@@ -45,7 +45,7 @@ Since we need a WaitGroup for each user, each client makes a request with a uniq
 
 Aside from the obvious rendering of the splats, I'd say rendering a 1280x720 canvas to PNG every frame is the next biggest bottleneck. Not so much for the client, but over the network this will be very expensive especially the bigger your canvas gets. This could cause UI freezing, network timeouts, and definetely high cloud costs for me.
 
-There are also a some possible Deadlock scenarios, but most of that stuff requires a nefarious client.
+There are also a some possible errors with the WaitGroups, but most of that stuff requires a nefarious client.
 
 If the resolution was any bigger I probably would've opted to make the project local and just keep the video file rather then having the client download it.
 
