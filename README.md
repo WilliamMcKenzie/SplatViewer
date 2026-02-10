@@ -1,6 +1,9 @@
 <h1 align="center">Splat Viewer</h1>
 
-Record videos of gaussian splats. Features include a timeline editor (keyframes/widgets), save/load timeline in json, preview playback and export to mp4.
+Record videos of gaussian splats. Features include: 
+- Timeline editor (keyframes/widgets)
+- Save/load timeline in json
+- Preview playback and export to mp4.
 
 ## Local
 
@@ -36,6 +39,13 @@ I recognize that for a local tool you don't need to send back a url, I wanted to
 
 Since we need a WaitGroup for each user, each client makes a request with a unique token used as a key to access their Waitgroup in a map. Each video is saved to a directory associated with their token, and deleted after 60 seconds.
 
+### 3. Performance
+
+Aside from the obvious rendering of the splats, I'd say rendering a 1280x720 canvas to PNG every frame is the next biggest bottleneck. Not so much for the client, but over the network this will be very expensive especially the biggest your canvas gets. This could cause UI freezing, network timeouts, and definetely high cloud costs for me.
+
+There are also a some possible Deadlock scenarios, but most of that stuff requires a nefarious client.
+
+If the resolution was any bigger I probably would've opted to make the project local and just keep the video file rather then having the client download it.
 
 
 
