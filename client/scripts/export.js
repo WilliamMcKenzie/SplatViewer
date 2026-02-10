@@ -3,7 +3,7 @@ import { renderFrame, toggleGizmos, frames } from "/scripts/timeline.js"
 const token = crypto.randomUUID().replace("-", "")
 
 async function startExport(frames) {
-	await fetch("http://localhost:67/start", {
+	await fetch("http://localhost:8067/start", {
 		method: "POST",
 		headers: {
 			"token" : token,
@@ -14,7 +14,7 @@ async function startExport(frames) {
 
 async function sendFrame(canvas, time, index) {
 	let blob = await new Promise(resolve => canvas.toBlob(resolve, "image/png"))
-	await fetch("http://localhost:67/frame", {
+	await fetch("http://localhost:8067/frame", {
 		method: "POST",
 		headers: {
 			"token" : token,
@@ -26,7 +26,7 @@ async function sendFrame(canvas, time, index) {
 }
 
 async function finishExport() {
-	let res = await fetch("http://localhost:67/finish", {
+	let res = await fetch("http://localhost:8067/finish", {
 		method: "POST",
 		headers: {
 			"token" : token
