@@ -108,8 +108,8 @@ func main() {
 	// users download at DOMAIN/output/TOKEN/output.mp4
 	http.Handle("/output/", http.StripPrefix("/output/", http.FileServer(http.Dir("output"))))
 
-	log.Println("Hosting files on port 67")
-	err := http.ListenAndServe(":67", nil)
+	log.Println("Hosting files on port 8067")
+	err := http.ListenAndServe(":8067", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
