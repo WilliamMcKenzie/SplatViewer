@@ -43,7 +43,7 @@ Since we need a WaitGroup for each user, each client makes a request with a uniq
 
 ### 3. Performance
 
-Aside from the obvious rendering of the splats, I'd say rendering a 1280x720 canvas to PNG every frame is the next biggest bottleneck. Not so much for the client, but over the network this will be very expensive especially the biggest your canvas gets. This could cause UI freezing, network timeouts, and definetely high cloud costs for me.
+Aside from the obvious rendering of the splats, I'd say rendering a 1280x720 canvas to PNG every frame is the next biggest bottleneck. Not so much for the client, but over the network this will be very expensive especially the bigger your canvas gets. This could cause UI freezing, network timeouts, and definetely high cloud costs for me.
 
 There are also a some possible Deadlock scenarios, but most of that stuff requires a nefarious client.
 
