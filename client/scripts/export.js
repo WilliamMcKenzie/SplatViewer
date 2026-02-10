@@ -88,6 +88,17 @@ export async function exportVideo(viewer) {
 	let time = startTime
 	let index = 0
 	
+	// just to prevent artifacts on the first frame
+	// (preload)
+	renderFrame(viewer, startTime)
+	viewer.update()
+	viewer.render()
+	await new Promise(requestAnimationFrame)
+	
+	viewer.update()
+	viewer.render()
+	await new Promise(requestAnimationFrame)
+	
 	let frameCount = 0
 	while (time < endTime) {
 		time += 1/fps

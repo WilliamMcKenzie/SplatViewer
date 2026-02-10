@@ -86,6 +86,7 @@ func finishExport(w http.ResponseWriter, r *http.Request) {
 		"-c:v", "libx264",
 		"-pix_fmt", "yuv420p",
 		filepath.Join("output/" + token, "output.mp4"),
+		"-progress", "pipe:1",
 	)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -97,7 +98,7 @@ func finishExport(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	fs = http.FileServer(http.Dir("./client"))
+	fs = http.FileServer(http.Dir("../client"))
 	http.HandleFunc("/", serveSite)
 	http.HandleFunc("/start", startExport)
 	http.HandleFunc("/frame", handleFrame)

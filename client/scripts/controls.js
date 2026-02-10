@@ -22,16 +22,19 @@ export function initControls(viewer) {
     const walkButton = document.getElementById("first_person_btn")
     
     // Prevent default pointer events
-    const blockEvent = (e) => {
+    const stopWalk = (e) => {
         if (walking) {
             e.stopImmediatePropagation()
-            if (e.type === 'mousedown' || e.type === 'pointerdown') {
-                toggleWalking()
-            }
+            toggleWalking()
         }
     }
-	canvas.addEventListener("pointerdown", blockEvent, { capture: true })
-    canvas.addEventListener('mousedown', blockEvent, { capture: true })
+	canvas.addEventListener("pointerdown", stopWalk, { capture: true })
+    canvas.addEventListener("mousedown", stopWalk, { capture: true })
+    document.addEventListener("pointerlockchange", (e) => {
+		if (document.pointerLockElement === null) {
+			stopWalk(e)
+		}
+	})
     
 	function toggleWalking() {
 		if (walking) {
@@ -51,10 +54,10 @@ export function initControls(viewer) {
         viewer.controls.enabled = !walking
     }
     
-    document.addEventListener('keydown', (e) => { keys[e.key] = true })
-    document.addEventListener('keyup', (e) => { keys[e.key] = false })
+    document.addEventListener("keydown", (e) => { keys[e.key] = true })
+    document.addEventListener("keyup", (e) => { keys[e.key] = false })
     
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener("mousemove", (e) => {
         if (walking) {
             yaw -= e.movementX * sensitivity
             pitch -= e.movementY * sensitivity
@@ -64,7 +67,7 @@ export function initControls(viewer) {
             const halfPi = Math.PI / 2
             pitch = Math.max(-halfPi, Math.min(halfPi, pitch))
             
-            const euler = new THREE.Euler(pitch, yaw, 0, 'YXZ')
+            const euler = new THREE.Euler(pitch, yaw, 0, "YXZ")
             viewer.camera.quaternion.setFromEuler(euler)
         }
     })
