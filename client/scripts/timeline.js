@@ -263,7 +263,7 @@ export function renderFrame(viewer, time = currentTime) {
 		pos = interpolateVector(p1, p2)
 	}
 	// dont mess up depth if walking mode
-	if (Math.round(p1.y) == 0 && Math.round(p2.y == 0)) {
+	if (Math.round(p1.y) == 0 && Math.round(p2.y) == 0) {
 		pos.y = 0
 	}
 	

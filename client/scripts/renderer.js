@@ -5,7 +5,8 @@ import { initTimeline, playFrame } from "/scripts/timeline.js"
 
 const defaultView = {
 	"initialCameraPosition": [0, 0, 0],
-	"initialCameraLookAt": [0, 0, 0]
+	"initialCameraLookAt": [0, 0, 0],
+	"sharedMemoryForWorkers": false,
 }
 const viewer = new GaussianSplats3D.Viewer(defaultView)
 
