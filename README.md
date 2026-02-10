@@ -1,5 +1,7 @@
 <h1 align="center">Splat Viewer</h1>
 
+[Demo video](https://youtu.be/3fYRcGcWoFQ)
+
 Record videos of gaussian splats. Features include: 
 - Timeline editor (keyframes/widgets)
 - Save/load timeline in json
