@@ -1,0 +1,8 @@
+runpod>=1.7,<2
+huggingface_hub>=0.34
+numpy>=1.26
+pillow>=10
+trimesh>=4
+matplotlib>=3.8
+viser>=1
+git+https://github.com/Robbyant/lingbot-map.git
