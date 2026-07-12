@@ -10,7 +10,7 @@ RUN apt-get update --yes && \
         curl git libgl1 libglib2.0-0 && \
     rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt /app/requirements.txt
+COPY runpod-worker/requirements.txt /app/requirements.txt
 RUN python -m pip install --upgrade pip && \
     python -m pip install -r /app/requirements.txt
 
@@ -19,6 +19,6 @@ RUN curl -fsSL \
     "https://huggingface.co/spaces/WilliamQM/craftbot-lingbot-map/resolve/${SPACE_REVISION}/pipeline.py" \
     -o /app/pipeline.py
 
-COPY handler.py /app/handler.py
+COPY runpod-worker/handler.py /app/handler.py
 
 CMD ["python", "-u", "/app/handler.py"]
