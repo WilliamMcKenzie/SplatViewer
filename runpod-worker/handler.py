@@ -44,7 +44,10 @@ print(f"[startup] loading {MODEL_ID}/{MODEL_FILE}")
 MODEL = P.build_model(
     resolve_checkpoint(),
     device="cuda",
-    camera_num_iterations=4,
+    # The upstream interactive demo recommends one refinement pass for lower
+    # latency. Four passes improve pose precision slightly but dominate a short
+    # 16-frame request and delay every visible result.
+    camera_num_iterations=1,
     use_sdpa=True,
 )
 if getattr(MODEL, "aggregator", None) is not None:
@@ -165,9 +168,14 @@ def handler(event: dict) -> dict:
         rec = P.reconstruct_points(
             MODEL,
             images,
-            num_scale_frames=min(8, len(paths)),
+            # Two bidirectional scale frames substantially reduce the initial
+            # activation phase while retaining enough context for this tight
+            # panoramic sweep.
+            num_scale_frames=min(2, len(paths)),
             keyframe_interval=1,
-            max_return_points=3_000_000,
+            # The response is capped at 12k lattice cells; returning three
+            # million raw samples only increases CPU transfer and voxelization.
+            max_return_points=1_000_000,
         )
 
     points, colors, _ = aligned_points(rec)
