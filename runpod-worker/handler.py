@@ -73,7 +73,10 @@ def aligned_points(rec: dict) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     keep = (confidence >= threshold) & (confidence > 1e-5)
     points, colors, confidence = points[keep], colors[keep], confidence[keep]
 
-    transform = P._alignment_transform(rec["extrinsic"])
+    # LingBot exposes camera extrinsics as [S, 3, 4]; the alignment helper
+    # operates on homogeneous [S, 4, 4] world-to-camera matrices.
+    _, w2c = P._camera_centers_world(rec["extrinsic"])
+    transform = P._alignment_transform(w2c)
     homogeneous = np.concatenate(
         [points, np.ones((len(points), 1), dtype=np.float64)],
         axis=1,
