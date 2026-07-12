@@ -69,7 +69,9 @@ def aligned_points(rec: dict) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     points = np.asarray(rec["points"], dtype=np.float64)
     colors = np.asarray(rec["colors"], dtype=np.uint8)
     confidence = np.asarray(rec["conf"], dtype=np.float64)
-    threshold = np.percentile(confidence, 65) if confidence.size else 0
+    # Retain enough medium-confidence surface samples to preserve railings,
+    # columns, and facade silhouettes once the cloud is quantized.
+    threshold = np.percentile(confidence, 55) if confidence.size else 0
     keep = (confidence >= threshold) & (confidence > 1e-5)
     points, colors, confidence = points[keep], colors[keep], confidence[keep]
 
@@ -100,7 +102,7 @@ def voxelize(points: np.ndarray, colors: np.ndarray, requested_size: float) -> l
     # reconstructed scene is normalized, so treating that value as an absolute
     # world-space unit collapses the scene to only a handful of blocks.
     base_cell_size = max(span / 32, (y_hi - y_lo) / 24, 0.02)
-    density_multiplier = max(0.25, min(4.0, float(requested_size or 1)))
+    density_multiplier = max(0.4, min(3.0, float(requested_size or 1)))
     cell_size = base_cell_size * density_multiplier
     if not math.isfinite(cell_size) or cell_size <= 0:
         cell_size = 0.05
@@ -125,9 +127,9 @@ def voxelize(points: np.ndarray, colors: np.ndarray, requested_size: float) -> l
         )
     )
     inside = (
-        (keys[:, 0] >= -18) & (keys[:, 0] <= 18)
-        & (keys[:, 1] >= 0) & (keys[:, 1] <= 24)
-        & (keys[:, 2] >= -18) & (keys[:, 2] <= 18)
+        (keys[:, 0] >= -48) & (keys[:, 0] <= 48)
+        & (keys[:, 1] >= 0) & (keys[:, 1] <= 64)
+        & (keys[:, 2] >= -48) & (keys[:, 2] <= 48)
     )
     keys, colors = keys[inside], colors[inside]
     if len(keys) == 0:
