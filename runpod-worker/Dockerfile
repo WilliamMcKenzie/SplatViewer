@@ -12,6 +12,7 @@ RUN apt-get update --yes && \
 
 COPY runpod-worker/requirements.txt /app/requirements.txt
 RUN python -m pip install --upgrade pip && \
+    python -m pip install --ignore-installed "cryptography>=48.0.1" && \
     python -m pip install -r /app/requirements.txt
 
 ARG SPACE_REVISION=ba0266e99be1906af1597e13a7f975eed9546a97
