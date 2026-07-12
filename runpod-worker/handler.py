@@ -96,7 +96,12 @@ def voxelize(points: np.ndarray, colors: np.ndarray, requested_size: float) -> l
     y_lo, y_hi = np.percentile(sample[:, 1], [1, 99.5])
     z_lo, z_hi = np.percentile(sample[:, 2], [1, 99])
     span = max(x_hi - x_lo, z_hi - z_lo)
-    cell_size = max(float(requested_size or 0.05), span / 32, (y_hi - y_lo) / 24)
+    # CraftBot sends voxelSize=1 as its default density multiplier. LingBot's
+    # reconstructed scene is normalized, so treating that value as an absolute
+    # world-space unit collapses the scene to only a handful of blocks.
+    base_cell_size = max(span / 32, (y_hi - y_lo) / 24, 0.02)
+    density_multiplier = max(0.25, min(4.0, float(requested_size or 1)))
+    cell_size = base_cell_size * density_multiplier
     if not math.isfinite(cell_size) or cell_size <= 0:
         cell_size = 0.05
 
